@@ -20,58 +20,60 @@ const index = (req, res) => {
 
 
 
-// const show = (req, res) => {
-//     const id = req.params.id;
+const show = (req, res) => {
+    const id = req.params.id;
 
+    const sql = "SELECT * FROM `movies` WHERE `id` = ?"
 
-//     const sql = "SELECT * FROM `movies` WHERE `movies`.`id` = ? "
+    const sqlReviws =   "SELECT * FROM movies INNER JOIN reviews ON movies.id = reviews.movie_id WHERE movies.id = ?"
 
-//     const sqlid = "SELECT *FROM `movies`INNER JOIN ` reviews` ON `movies`.`id` = `reviews`.`movie_id` WHERE `movies`.`id` = ?"
+    dbConnection.query(sql, [id], (err, arrayFilms) => {
 
-//     dbConnection.query(sql, [id], (err, filmArray) => {
-//         if (err) {
-//             return res.status(500).json({
-//                 error: true,
-//                 message: "ERRORE DEL SERVER"
-//             })
-//         }
+        if(err) {
+            return res.status(500).json({
+                error: true,
+                message: "ERRORE INTERNO DEL SERVER1"
+            })
+        }
 
-//         if (filmArray === 0) {
-//             return res.status(404).json({
-//                 error: true,
-//                 message: "film non trovato"
-//             })
-//         }
+        if (arrayFilms.length === 0) {
+            return res.status(404).json({
+                error: true,
+                message: "FILM NON TROVATO"
+            })
+        }
 
-//         dbConnection.query(sqlid, [id], (err, revius) => {
-//             if (err) {
-//                 return res.status(500).json({
-//                     error: true,
-//                     message: "ERRORE DEL SERVER"
-//                 })
-//             }
-
-//             return res.status(200).json({
-//                 status: "succes",
-//                 data: {
-//                     ...filmArray,
-//                     revius,
-//                 }
-//             })
-
-//         })
+        dbConnection.query(sqlReviws, [id], (err, arrayReviws) => {
 
 
 
-//     })
+            if(err) {
+                return res.status(500).json({
+                    error: true,
+                    message: "ERRORE INTERNO DEL SERVER2"
+                })
+            }
 
+            return res.status(200).json({
+                status: "succes",
+                data:{
+                    ...arrayFilms[0],
+                    arrayReviws 
+                }
+            })
+        })
 
-
-
-
+    })
 
 
 }
+
+
+
+
+
+
+
 
 
 

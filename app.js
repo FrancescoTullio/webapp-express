@@ -1,7 +1,8 @@
 const express = require("express");
 const filmsRouter = require("./routers/films")
 const app = express();
-const port =3000
+const port = process.env.SERVER_PORT;
+app.use(express.static("public"));
 
 
 
