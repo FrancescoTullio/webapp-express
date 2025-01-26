@@ -3,8 +3,11 @@ const filmsRouter = require("./routers/films")
 const app = express();
 const port = process.env.SERVER_PORT;
 app.use(express.static("public"));
+const cors = require("cors");
 
-
+app.use(cors({
+    origin: "http://localhost:5173/"
+  }))
 
 app.use("/films", filmsRouter)
 
