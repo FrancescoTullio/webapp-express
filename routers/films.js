@@ -11,6 +11,9 @@ router.get("/", filmController.index);
 router.get("/:id", filmController.show);
 
 
+// store
+router.post("/", bookController.store);
+
 
 
 
